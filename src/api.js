@@ -1,36 +1,47 @@
-const { google } = require("googleapis");
-const keys = require("./keys.json");
+const {
+  google
+} = require("googleapis");
+const keys = require("../keys.json");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const serverless = require("serverless-http");
 
 const client = new google.auth.JWT(keys.client_email, null, keys.private_key, [
   "https://www.googleapis.com/auth/spreadsheets",
 ]);
 
 const app = express();
-const port = 3000;
+const router = express.Router();
 
-app.get("/", (req, res) => {
+/*app.get("/", (req, res) => {
   res.send("hello world");
-});
+});*/
 
 /*app.listen(port, () =>
   console.log(`Hello world app listening on port ${port}!`)
 )*/
 
-let emails = [];
+/*let emails = [];
 
 app.use(cors());
 app.use(
   bodyParser.urlencoded({
     extended: false,
   })
-);
+);*/
 app.use(bodyParser.json());
 
-app.post("/emails", (req, res) => {
-  const email = [[req.body.email]];
+router.get("/", (req, res) => {
+  res.json({
+    hello: "hi",
+  });
+});
+
+/*app.post("/emails", (req, res) => {
+  const email = [
+    [req.body.email]
+  ];
 
   console.log(email);
   emails.push(email);
@@ -158,3 +169,8 @@ async function internship(cl) {
     let res = await gsapi.spreadsheets.values.update(uptOpt);
     console.log(res)
 } */
+
+app.use("/.netlify/functions/api", router);
+
+module.exports = app;
+module.exports.handler = serverless(app);
