@@ -34,7 +34,7 @@ app.use(bodyParser.json());
 
 router.get("/", (req, res) => {
   res.json({
-    hello: "hi",
+    hello: "hello there, welcome to the api",
   });
 });
 
