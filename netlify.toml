@@ -1,9 +1,13 @@
 [build]
-  publish = "dist"
-  functions = 'functions'
+  functions = "functions"
+
+[[plugins]]
+  package = "netlify-plugin-gatsby-cache"
+
+[dev]
+  functions = "functions"
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
-[[plugins]]
-  package = "@netlify/plugin-functions-install-core"
